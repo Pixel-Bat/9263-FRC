@@ -12,9 +12,9 @@ public final class Autos {
   /** Example static factory for an autonomous command. */
   public static Command driveBackAuto(Drivetrain drive) {
     return Commands.sequence(
-      drive.drive(0.35, 0).withTimeout(4),
-      drive.drive(-0.35, 0).withTimeout(4),
-      drive.drive(35, 0).withTimeout(6)
+      drive.drive(0.5, 0).withTimeout(1),
+      drive.drive(-0.25, 0).withTimeout(3),
+      drive.drive(0.5, 0).withTimeout(4)
     );
   }
 

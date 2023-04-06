@@ -15,18 +15,26 @@ import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
 
-  private final PWMSparkMax frontLeftMotor = new PWMSparkMax(Constants.FRONT_LEFT_PORT);
-  private final PWMSparkMax frontRightMotor = new PWMSparkMax(Constants.FRONT_RIGHT_PORT);
-  private final PWMSparkMax backLeftMotor = new PWMSparkMax(Constants.BACK_LEFT_PORT);
-  private final PWMSparkMax backRightMotor = new PWMSparkMax(Constants.BACK_RIGHT_PORT);
+  private final PWMSparkMax frontLeftMotor;
+  private final PWMSparkMax frontRightMotor;
+  private final PWMSparkMax backLeftMotor;
+  private final PWMSparkMax backRightMotor;
 
-  private final MotorControllerGroup driveLeft = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
-  private final MotorControllerGroup driveRight = new MotorControllerGroup(frontRightMotor, backRightMotor);
+  private final MotorControllerGroup driveLeft;
+  private final MotorControllerGroup driveRight;
 
   private final DifferentialDrive drive;
 
   /** Creates a new ExampleSubsystem. */
   public Drivetrain() {
+    this.frontLeftMotor = new PWMSparkMax(Constants.FRONT_LEFT_PORT);
+    this.frontRightMotor = new PWMSparkMax(Constants.FRONT_RIGHT_PORT);
+    this.backLeftMotor = new PWMSparkMax(Constants.BACK_LEFT_PORT);
+    this.backRightMotor = new PWMSparkMax(Constants.BACK_RIGHT_PORT);
+
+    this.driveLeft = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
+    this.driveRight = new MotorControllerGroup(frontRightMotor, backRightMotor);
+
     this.driveRight.setInverted(true);
 
     this.drive = new DifferentialDrive(driveLeft, driveRight);
@@ -34,18 +42,20 @@ public class Drivetrain extends SubsystemBase {
 
   /**
    * Command that takes in a double supplier method
+   * 
    * @param forward
    * @param rotation
    * @return Arcade Drive Command
    */
   public Command arcadeDriveCommand(DoubleSupplier forward, DoubleSupplier rotation) {
-    return run( () -> {
+    return run(() -> {
       this.drive.arcadeDrive(-forward.getAsDouble(), rotation.getAsDouble());
     });
   }
 
   /**
    * Returns a Command that drives at a certain percentage
+   * 
    * @param forward
    * @param rotation
    * @return
