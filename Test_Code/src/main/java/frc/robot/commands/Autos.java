@@ -12,11 +12,19 @@ public final class Autos {
   /** Example static factory for an autonomous command. */
   public static Command driveBackAuto(Drivetrain drive) {
     return Commands.sequence(
-      drive.drive(0.5, 0).withTimeout(1),
-      drive.drive(-0.25, 0).withTimeout(3),
-      drive.drive(0.5, 0).withTimeout(4)
+      drive.drive(1, 0).withTimeout(0.3),
+      drive.drive(-0.5, 0).withTimeout(2),
+      drive.drive(0.75, 0).withTimeout(2)
     );
   }
+
+  // public static Command driveStraightAuto(Drivetrain drive) {
+  //   return Commands.sequence(
+  //     drive.drive(1, 0).withTimeout(1),
+  //     drive.drive(-0.25, 0).withTimeout(3),
+  //     drive.drive(0.5, 0).withTimeout(4)
+  //   );
+  // }
 
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
