@@ -4,9 +4,16 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -100,4 +107,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  public static void initTalon(TalonSRX motor) {
+    motor.setNeutralMode(NeutralMode.Coast);
+    motor.neutralOutput();
+    motor.setSensorPhase(false);
+    motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+    motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+
+    motor.configNominalOutputForward(0.0, 0);
+    motor.configNominalOutputReverse(0.0, 0);
+    motor.configClosedloopRamp(0.5, 0);
+  }
 }
