@@ -4,10 +4,16 @@
 
 package frc.robot;
 import frc.robot.commands.Autos;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Arm;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,10 +24,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
+  private final Claw claw = new Claw();
+  private final Arm elevator = new Arm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandJoystick driveController =
       new CommandJoystick(Constants.DRIVER_PORT);
+  private final XboxController m_controllerTemp = new XboxController(Constants.DRIVER_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -29,6 +38,11 @@ public class RobotContainer {
       this.drivetrain.arcadeDriveCommand(this.driveController::getZ, this.driveController::getX));
 
     // Configure the trigger bindings
+
+    SmartDashboard.putData(drivetrain);
+    SmartDashboard.putData(elevator);
+    SmartDashboard.putData(claw);
+
     configureBindings();
   }
 
@@ -44,6 +58,17 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+
+    final JoystickButton dPadUp = new JoystickButton(m_controllerTemp, 1);
+    final JoystickButton dPadDown = new JoystickButton(m_controllerTemp, 2);
+    final JoystickButton dPadRight = new JoystickButton(m_controllerTemp, 3);
+    final JoystickButton dPadLeft = new JoystickButton(m_controllerTemp, 4);
+ 
+    // Connect the buttons to commands
+    dPadUp.whileTrue(claw.release());
+    dPadDown.whileTrue(claw.grab());
+    // dPadRight.whileTrue(elevator.up(0.75));
+    // dPadLeft.whileTrue(elevator.down(0.75));
   }
 
   /**

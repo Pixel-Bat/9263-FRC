@@ -20,4 +20,13 @@ public final class Constants {
   public static final int FRONT_RIGHT_PORT = 1;
   public static final int BACK_LEFT_PORT = 3;
   public static final int BACK_RIGHT_PORT = 0;
+
+  public static final double ARM_POSITION_CONVERSION = 1;
+
+  public static final class PID_CONSTANTS {
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF =0;
+  }
 }
