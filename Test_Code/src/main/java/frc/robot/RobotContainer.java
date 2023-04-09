@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.subsystems.Camera;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,12 +27,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
   private final Claw claw = new Claw();
-  private final Arm elevator = new Arm();
+  private final Arm arm = new Arm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandJoystick driveController =
       new CommandJoystick(Constants.DRIVER_PORT);
   private final XboxController m_controllerTemp = new XboxController(Constants.DRIVER_PORT);
+
+  private Camera camera;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -40,7 +44,7 @@ public class RobotContainer {
     // Configure the trigger bindings
 
     SmartDashboard.putData(drivetrain);
-    SmartDashboard.putData(elevator);
+    SmartDashboard.putData(arm);
     SmartDashboard.putData(claw);
 
     configureBindings();
@@ -67,8 +71,14 @@ public class RobotContainer {
     // Connect the buttons to commands
     dPadUp.whileTrue(claw.release());
     dPadDown.whileTrue(claw.grab());
-    // dPadRight.whileTrue(elevator.up(0.75));
-    // dPadLeft.whileTrue(elevator.down(0.75));
+    dPadRight.whileTrue(arm.retractArm());
+    dPadLeft.whileTrue(arm.deployArm());
+  }
+
+  public void Initialize() {
+    this.arm.resetEncoder();
+
+    camera = new Camera();
   }
 
   /**

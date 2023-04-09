@@ -20,11 +20,15 @@ public class Arm extends SubsystemBase {
   private final CANSparkMax motor;
   private final RelativeEncoder encoder;
   private final SparkMaxPIDController controller;
+
+  private double angle;
   
   /** Create a new claw subsystem. */
   public Arm() {
     this.motor = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
+    
     this.motor.restoreFactoryDefaults();
+    this.motor.setInverted(true);
     this.motor.setSmartCurrentLimit(60, 20);
     this.motor.setIdleMode(IdleMode.kBrake);
 
@@ -32,13 +36,18 @@ public class Arm extends SubsystemBase {
     this.encoder.setPositionConversionFactor(Constants.ARM_POSITION_CONVERSION);
 
     this.controller = this.motor.getPIDController();
-    this.controller.setP(Constants.PID_CONSTANTS.kP);
-    this.controller.setI(Constants.PID_CONSTANTS.kI);
-    this.controller.setD(Constants.PID_CONSTANTS.kD);
-    this.controller.setFF(Constants.PID_CONSTANTS.kFF);
+    SmartDashboard.putNumber("P", 0);
+    SmartDashboard.putNumber("I", 0);
+    SmartDashboard.putNumber("D", 0);
+    SmartDashboard.putNumber("FF", 0);
+    SmartDashboard.putNumber("Angle", 0);
+    // this.controller.setP(Constants.PID_CONSTANTS.kP);
+    // this.controller.setI(Constants.PID_CONSTANTS.kI);
+    // this.controller.setD(Constants.PID_CONSTANTS.kD);
+    // this.controller.setFF(Constants.PID_CONSTANTS.kFF);
   }
 
-  public Command homeArm() {
+  public Command retractArm() {
     return runOnce(() -> {
       this.setArmPosition(0);
     });
@@ -46,8 +55,12 @@ public class Arm extends SubsystemBase {
 
   public Command deployArm() {
     return runOnce(() -> {
-      this.setArmPosition(90);
+      this.setArmPosition(angle);
     });
+  }
+
+  public void resetEncoder() {
+    this.encoder.setPosition(0);
   }
 
   /**
@@ -60,6 +73,12 @@ public class Arm extends SubsystemBase {
 
   public void log() {
     SmartDashboard.putNumber("Shoulder Position", this.encoder.getPosition());
+    
+    this.controller.setP(SmartDashboard.getNumber("P", 0));
+    this.controller.setI(SmartDashboard.getNumber("I", 0));
+    this.controller.setD(SmartDashboard.getNumber("D", 0));
+    this.controller.setFF(SmartDashboard.getNumber("FF", 0));
+    angle = SmartDashboard.getNumber("Angle", 30);
   }
 
   /** Call log method every loop. */
