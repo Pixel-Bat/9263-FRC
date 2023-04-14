@@ -39,7 +39,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     this.drivetrain.setDefaultCommand(
-      this.drivetrain.arcadeDriveCommand(-this.driveController::getY, this.driveController::getZ));
+      this.drivetrain.arcadeDriveCommand(this.driveController::getY, this.driveController::getZ));
 
     // Configure the trigger bindings
 
