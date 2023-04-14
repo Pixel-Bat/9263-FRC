@@ -39,7 +39,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     this.drivetrain.setDefaultCommand(
-      this.drivetrain.arcadeDriveCommand(this.driveController::getZ, this.driveController::getX));
+      this.drivetrain.arcadeDriveCommand(-this.driveController::getY, this.driveController::getZ));
 
     // Configure the trigger bindings
 
@@ -63,16 +63,16 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
-    final JoystickButton dPadUp = new JoystickButton(m_controllerTemp, 1);
-    final JoystickButton dPadDown = new JoystickButton(m_controllerTemp, 2);
-    final JoystickButton dPadRight = new JoystickButton(m_controllerTemp, 3);
-    final JoystickButton dPadLeft = new JoystickButton(m_controllerTemp, 4);
+    final JoystickButton ReleaseButton = new JoystickButton(m_controllerTemp, 7);
+    final JoystickButton GrabButton = new JoystickButton(m_controllerTemp, 8);
+    final JoystickButton RetractButton = new JoystickButton(m_controllerTemp, 5);
+    final JoystickButton DeployButton = new JoystickButton(m_controllerTemp, 6);
  
     // Connect the buttons to commands
-    dPadUp.whileTrue(claw.release());
-    dPadDown.whileTrue(claw.grab());
-    dPadRight.whileTrue(arm.retractArm());
-    dPadLeft.whileTrue(arm.deployArm());
+    ReleaseButton.whileTrue(claw.release());
+    GrabButton.whileTrue(claw.grab());
+    RetractButton.whileTrue(arm.retractArm());
+    DeployButton.whileTrue(arm.deployArm());
   }
 
   public void Initialize() {

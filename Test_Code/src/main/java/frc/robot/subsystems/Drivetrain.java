@@ -49,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public Command arcadeDriveCommand(DoubleSupplier forward, DoubleSupplier rotation) {
     return run(() -> {
-      this.drive.arcadeDrive(-forward.getAsDouble(), rotation.getAsDouble());
+      this.drive.arcadeDrive(forward.getAsDouble(), rotation.getAsDouble());
     });
   }
 
