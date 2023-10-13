@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
    * @param angle
    */
   private void setArmPosition(double angle) {
-    this.controller.setReference(angle, ControlType.kPosition);r
+    this.controller.setReference(angle, ControlType.kPosition);
   }
 
   public void log() {
