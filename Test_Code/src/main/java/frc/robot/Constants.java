@@ -23,8 +23,10 @@ public final class Constants {
 
   public static final double ARM_POSITION_CONVERSION = 1;
 
+  public static final double ArmAngle = 60;
+
   public static final class PID_CONSTANTS {
-    public static final double kP = 0;
+    public static final double kP = 0.007;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF =0;

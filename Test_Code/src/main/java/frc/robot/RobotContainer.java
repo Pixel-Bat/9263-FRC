@@ -63,8 +63,8 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
-    final JoystickButton ReleaseButton = new JoystickButton(m_controllerTemp, 7);
-    final JoystickButton GrabButton = new JoystickButton(m_controllerTemp, 8);
+    final JoystickButton ReleaseButton = new JoystickButton(m_controllerTemp, 8);
+    final JoystickButton GrabButton = new JoystickButton(m_controllerTemp, 7);
     final JoystickButton RetractButton = new JoystickButton(m_controllerTemp, 5);
     final JoystickButton DeployButton = new JoystickButton(m_controllerTemp, 6);
  

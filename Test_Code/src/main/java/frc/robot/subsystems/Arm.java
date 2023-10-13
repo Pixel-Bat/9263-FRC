@@ -36,12 +36,12 @@ public class Arm extends SubsystemBase {
     this.encoder.setPositionConversionFactor(Constants.ARM_POSITION_CONVERSION);
 
     this.controller = this.motor.getPIDController();
-    SmartDashboard.putNumber("P", 0);
+    //SmartDashboard.putNumber("P", 0);
     SmartDashboard.putNumber("I", 0);
     SmartDashboard.putNumber("D", 0);
     SmartDashboard.putNumber("FF", 0);
     SmartDashboard.putNumber("Angle", 0);
-    // this.controller.setP(Constants.PID_CONSTANTS.kP);
+    this.controller.setP(Constants.PID_CONSTANTS.kP);
     // this.controller.setI(Constants.PID_CONSTANTS.kI);
     // this.controller.setD(Constants.PID_CONSTANTS.kD);
     // this.controller.setFF(Constants.PID_CONSTANTS.kFF);
@@ -55,7 +55,7 @@ public class Arm extends SubsystemBase {
 
   public Command deployArm() {
     return runOnce(() -> {
-      this.setArmPosition(angle);
+      this.setArmPosition(Constants.ArmAngle);
     });
   }
 
@@ -68,13 +68,14 @@ public class Arm extends SubsystemBase {
    * @param angle
    */
   private void setArmPosition(double angle) {
-    this.controller.setReference(angle, ControlType.kPosition);
+    this.controller.setReference(angle, ControlType.kPosition);r
   }
 
   public void log() {
     SmartDashboard.putNumber("Shoulder Position", this.encoder.getPosition());
     
-    this.controller.setP(SmartDashboard.getNumber("P", 0));
+    // this.controller.setP(SmartDashboard.getNumber("P", 0));
+    //this.controller.setP(Constants.PID_CONSTANTS.kP);
     this.controller.setI(SmartDashboard.getNumber("I", 0));
     this.controller.setD(SmartDashboard.getNumber("D", 0));
     this.controller.setFF(SmartDashboard.getNumber("FF", 0));

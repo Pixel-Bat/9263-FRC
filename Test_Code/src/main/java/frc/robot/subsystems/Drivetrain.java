@@ -62,7 +62,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public Command drive(double forward, double rotation) {
     return runEnd(() -> {
-      this.drive.arcadeDrive(forward, rotation);
+      this.drive.arcadeDrive(Math.pow(forward, 3), Math.pow(rotation, 3));
     }, this.drive::stopMotor);
   }
 
